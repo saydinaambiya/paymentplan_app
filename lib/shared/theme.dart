@@ -5,6 +5,7 @@ Color backgroundColor = const Color(0xFF04112F);
 Color blueColor = const Color(0xFF007DFF);
 Color greyColor = const Color(0xFF8997B8);
 Color whiteColor = const Color(0xFFFFFFFF);
+Color redColor = const Color(0xFFF47174);
 
 TextStyle titleStyle = GoogleFonts.poppins(
   color: whiteColor,
@@ -42,8 +43,10 @@ TextStyle priceStyle = GoogleFonts.poppins(
   fontSize: 18,
 );
 
-TextStyle buttonStyle = GoogleFonts.poppins(
-  color: whiteColor,
-  fontWeight: FontWeight.w500,
-  fontSize: 16,
-);
+TextStyle buttonStyle(Color buttonColor) {
+  return GoogleFonts.poppins(
+    color: buttonColor,
+    fontWeight: FontWeight.w500,
+    fontSize: 16,
+  );
+}

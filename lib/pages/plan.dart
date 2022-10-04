@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:payment_app/shared/theme.dart';
 
 class PlanPage extends StatefulWidget {
@@ -10,6 +11,7 @@ class PlanPage extends StatefulWidget {
 
 class _PlanPageState extends State<PlanPage> {
   int selectedindex = -1;
+  bool isClicked = false;
   @override
   Widget build(BuildContext context) {
     Widget headerWidget() {
@@ -45,11 +47,13 @@ class _PlanPageState extends State<PlanPage> {
       );
     }
 
-    Widget optionWidget(int index) {
+    Widget optionWidget(
+        int index, String titlePlan, String descPlan, int pricePlan) {
       return GestureDetector(
         onTap: () {
           setState(() {
             selectedindex = index;
+            isClicked = true;
           });
         },
         child: Container(
@@ -66,16 +70,65 @@ class _PlanPageState extends State<PlanPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Monthly',
+                    titlePlan,
                     style: titlePlanStyle,
                   ),
                   Text(
-                    'Good for starting up',
+                    descPlan,
                     style: descPlanStyle,
                   )
                 ],
               ),
+              const Spacer(),
+              Text(
+                NumberFormat.simpleCurrency(locale: 'en_US', decimalDigits: 0)
+                    .format(pricePlan),
+                style: priceStyle,
+              )
             ],
+          ),
+        ),
+      );
+    }
+
+    Widget buttonCheckout() {
+      return Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+        child: MaterialButton(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          height: 50,
+          minWidth: double.infinity,
+          elevation: 5,
+          color: blueColor,
+          onPressed: () {},
+          child: Text(
+            'Checkout Now',
+            style: buttonStyle(whiteColor),
+          ),
+        ),
+      );
+    }
+
+    Widget cancelCheckout() {
+      return Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+        child: MaterialButton(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          // height: 50,
+          minWidth: double.minPositive,
+          elevation: 5,
+          color: whiteColor,
+          onPressed: () {
+            setState(() {
+              isClicked = false;
+              selectedindex = -1;
+            });
+          },
+          child: Text(
+            'Cancel',
+            style: buttonStyle(redColor),
           ),
         ),
       );
@@ -86,9 +139,17 @@ class _PlanPageState extends State<PlanPage> {
       body: Column(
         children: [
           headerWidget(),
-          optionWidget(0),
-          optionWidget(1),
-          optionWidget(2),
+          optionWidget(0, 'Monthly', 'Good for starting up', 20),
+          optionWidget(1, 'Quarterly', 'Focusing on building', 55),
+          optionWidget(2, 'Yearly', 'Steady company', 220),
+          isClicked
+              ? Column(
+                  children: [
+                    buttonCheckout(),
+                    cancelCheckout(),
+                  ],
+                )
+              : const SizedBox()
         ],
       ),
     );
