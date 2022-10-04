@@ -16,20 +16,18 @@ class PlanPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 50, left: 60),
-              child: Row(
-                children: [
-                  Text(
-                    'Upgrade to ',
-                    style: titleStyle,
-                  ),
-                  Text(
-                    'Pro',
-                    style: titleProStyle,
-                  )
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Upgrade to ',
+                  style: titleStyle,
+                ),
+                Text(
+                  'Pro',
+                  style: titleProStyle,
+                )
+              ],
             ),
             const SizedBox(height: 16),
             Text(
